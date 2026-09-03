@@ -14,3 +14,5 @@
 ![Anaconda](https://img.shields.io/badge/Anaconda-44A833?style=for-the-badge&logo=anaconda&logoColor=white)
 
 </div>
+
+Local: http://localhost:5173/
