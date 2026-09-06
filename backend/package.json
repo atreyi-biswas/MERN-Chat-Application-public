@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "build": "shx rm -rf dist && shx cp -r src dist",
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +19,8 @@
     "express": "^5.2.1",
     "mongoose": "^9.9.4",
     "nodemon": "^3.1.14"
+  },
+  "devDependencies": {
+    "shx": "^0.4.0"
   }
 }
