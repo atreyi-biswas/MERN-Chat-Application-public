@@ -1,4 +1,3 @@
-
 import "./App.css";
 import {
   SignInButton,
@@ -29,4 +28,3 @@ function App() {
 }
 
 export default App;
-
