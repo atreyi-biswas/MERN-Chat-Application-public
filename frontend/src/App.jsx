@@ -1,28 +1,32 @@
-import './App.css'
+
+import "./App.css";
 import {
-  Show,
   SignInButton,
   SignUpButton,
-  UserButton
-} from '@clerk/clerk-react'
+  UserButton,
+  useAuth,
+} from "@clerk/clerk-react";
 
 function App() {
+  const { isSignedIn } = useAuth();
+
   return (
     <div>
       <h1>message.</h1>
 
       <header>
-        <Show when="signed-out">
-          <SignInButton node = "modal"/>
-          <SignUpButton node = "modal"/>
-        </Show>
+        {!isSignedIn && (
+          <>
+            <SignInButton mode="modal" />
+            <SignUpButton mode="modal" />
+          </>
+        )}
 
-        <Show when="signed-in">
-          <UserButton />
-        </Show>
+        {isSignedIn && <UserButton />}
       </header>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
+
