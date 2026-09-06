@@ -15,8 +15,10 @@
   "dependencies": {
     "@clerk/express": "^2.1.66",
     "cors": "^2.8.6",
+    "cron": "^4.4.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "i": "^0.3.7",
     "mongoose": "^9.9.4",
     "nodemon": "^3.1.14"
   },
