@@ -16,7 +16,7 @@ import messageRoutes from "./routes/message.route.js";
 
 import { app, server } from "./lib/socket.js";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const publicDir = path.join(process.cwd(), "public");
@@ -31,16 +31,7 @@ app.use(
 
 // JSON parser
 app.use(express.json());
-
-// CORS
-app.use(
-  cors({
-    origin: FRONTEND_URL,
-    credentials: true,
-  })
-);
-
-// Clerk middleware
+app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(clerkMiddleware());
 
 // Health check
@@ -52,34 +43,18 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Serve frontend files in production
+// if the public directory exists, serve the static files
+// this is for the production build
 if (fs.existsSync(publicDir)) {
   app.use(express.static(publicDir));
 
   app.get("/{*any}", (req, res, next) => {
-    res.sendFile(
-      path.join(publicDir, "index.html"),
-      (err) => next(err)
-    );
+    res.sendFile(path.join(publicDir, "index.html"), (err) => next(err));
   });
 }
-
-// Start server only after MongoDB connects
-const startServer = async () => {
-  try {
-    await connectDB();
 
     server.listen(PORT, () => {
       console.log("Server is up and running on PORT:", PORT);
 
-      if (process.env.NODE_ENV === "production") {
-        job.start();
-      }
-    });
-  } catch (error) {
-    console.error("Failed to start server:", error);
-    process.exit(1);
-  }
-};
-
-startServer();
+  if (process.env.NODE_ENV === "production") job.start();
+});
